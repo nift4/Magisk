@@ -13,7 +13,7 @@ import com.topjohnwu.superuser.Shell
 class UninstallDialog : DialogEvent() {
 
     override fun build(dialog: MagiskDialog) {
-        dialog.apply {
+        /*dialog.apply {
             setTitle(R.string.uninstall_magisk_title)
             setMessage(R.string.uninstall_magisk_msg)
             setButton(MagiskDialog.ButtonType.POSITIVE) {
@@ -24,10 +24,10 @@ class UninstallDialog : DialogEvent() {
                 text = R.string.complete_uninstall
                 onClick { completeUninstall(dialog) }
             }
-        }
+        }*/
     }
 
-    @Suppress("DEPRECATION")
+    /*@Suppress("DEPRECATION")
     private fun restore(context: Context) {
         val dialog = ProgressDialog(context).apply {
             setMessage(context.getString(R.string.restore_img_msg))
@@ -47,6 +47,6 @@ class UninstallDialog : DialogEvent() {
     private fun completeUninstall(dialog: MagiskDialog) {
         (dialog.ownerActivity as NavigationActivity<*>)
             .navigation.navigate(FlashFragment.uninstall())
-    }
+    }*/
 
 }

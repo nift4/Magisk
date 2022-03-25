@@ -27,6 +27,7 @@ bool zygisk_enabled = false;
 #define MNT_DIR_IS(dir) (me->mnt_dir == string_view(dir))
 #define MNT_TYPE_IS(type) (me->mnt_type == string_view(type))
 #define SETMIR(b, part) snprintf(b, sizeof(b), "%s/" MIRRDIR "/" #part, MAGISKTMP.data())
+#define SETMGR(b) snprintf(b, sizeof(b), "%s/" MANAGERAPK2, MAGISKTMP.data())
 #define SETBLK(b, part) snprintf(b, sizeof(b), "%s/" BLOCKDIR "/" #part, MAGISKTMP.data())
 
 #define do_mount_mirror(part) {     \
@@ -378,18 +379,24 @@ void boot_complete(int client) {
     if (access(SECURE_DIR, F_OK) != 0)
         xmkdir(SECURE_DIR, 0700);
 
+    // Only try to install APK when no manager is installed
+    // Magisk Manager should be upgraded by itself, not through recovery installs
     if (!get_manager()) {
+        char buf1[4096];
+        SETMGR(buf1);
+
         if (access(MANAGERAPK, F_OK) == 0) {
-            // Only try to install APK when no manager is installed
-            // Magisk Manager should be upgraded by itself, not through recovery installs
             rename(MANAGERAPK, "/data/magisk.apk");
             install_apk("/data/magisk.apk");
-        } else {
+        } else if (access(buf1, F_OK) == 0) {
+            rename(buf1, "/data/magisk.apk");
+            install_apk("/data/magisk.apk");
+        } /* else {
             // Install stub
             auto init = MAGISKTMP + "/magiskinit";
             exec_command_sync(init.data(), "-x", "manager", "/data/magisk.apk");
             install_apk("/data/magisk.apk");
-        }
+        }*/
     }
     unlink(MANAGERAPK);
 }

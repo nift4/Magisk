@@ -153,7 +153,7 @@ object DownloadPath : BaseSettingsItem.Input() {
     override fun getView(context: Context) = DialogSettingsDownloadPathBinding
         .inflate(LayoutInflater.from(context)).also { it.data = this }.root
 }
-
+/*
 object UpdateChannel : BaseSettingsItem.Selector() {
     override var value
         get() = Config.updateChannel
@@ -206,6 +206,7 @@ object UpdateChecker : BaseSettingsItem.Toggle() {
             JobService.schedule(AppContext)
         }
 }
+*/
 
 object DoHToggle : BaseSettingsItem.Toggle() {
     override val title = R.string.settings_doh_title.asText()

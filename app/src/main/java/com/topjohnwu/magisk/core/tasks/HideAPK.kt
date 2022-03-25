@@ -40,7 +40,7 @@ object HideAPK {
     // Some arbitrary limit
     const val MAX_LABEL_LENGTH = 32
 
-    private val svc get() = ServiceLocator.networkService
+    //private val svc get() = ServiceLocator.networkService
 
     private fun genPackageName(): String {
         val random = SecureRandom()
@@ -106,15 +106,15 @@ object HideAPK {
 
     private suspend fun patchAndHide(activity: Activity, label: String, onFailure: Runnable): Boolean {
         val stub = File(activity.cacheDir, "stub.apk")
-        try {
+        /*try {
             svc.fetchFile(Info.remote.stub.link).byteStream().writeTo(stub)
         } catch (e: IOException) {
-            Timber.e(e)
+            Timber.e(e)*/
             stub.createNewFile()
-            val cmd = "\$MAGISKBIN/magiskinit -x manager ${stub.path}"
-            if (!Shell.cmd(cmd).exec().isSuccess)
+            val ccmd = "\$MAGISKBIN/magiskinit -x manager ${stub.path}"
+            if (!Shell.cmd(ccmd).exec().isSuccess)
                 return false
-        }
+        //}
 
         // Generate a new random package name and signature
         val repack = File(activity.cacheDir, "patched.apk")

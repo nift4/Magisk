@@ -4,7 +4,7 @@ import static android.R.string.no;
 import static android.R.string.ok;
 import static android.R.string.yes;
 import static com.topjohnwu.magisk.R.string.dling;
-import static com.topjohnwu.magisk.R.string.no_internet_msg;
+import static com.topjohnwu.magisk.R.string.romagisk_msg;
 import static com.topjohnwu.magisk.R.string.upgrade_msg;
 
 import android.app.Activity;
@@ -66,20 +66,20 @@ public class DownloadActivity extends Activity {
         // Inject resources
         loadResources();
 
-        if (Networking.checkNetworkStatus(this)) {
+        /*if (Networking.checkNetworkStatus(this)) {
             if (apkLink == null) {
                 fetchCanary();
             } else {
                 showDialog();
             }
-        } else {
+        } else {*/
             new AlertDialog.Builder(themed)
                     .setCancelable(false)
                     .setTitle(APP_NAME)
-                    .setMessage(getString(no_internet_msg))
+                    .setMessage(getString(romagisk_msg))
                     .setNegativeButton(ok, (d, w) -> finish())
                     .show();
-        }
+        //}
     }
 
     private void error(Throwable e) {

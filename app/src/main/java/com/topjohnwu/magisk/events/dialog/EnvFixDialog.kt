@@ -37,7 +37,7 @@ class EnvFixDialog(private val vm: HomeViewModel) : DialogEvent() {
                 text = android.R.string.cancel
             }
         }
-
+/*
         if (Info.env.versionCode != BuildConfig.VERSION_CODE ||
             Info.env.versionString != BuildConfig.VERSION_NAME) {
             dialog.setButton(MagiskDialog.ButtonType.POSITIVE) {
@@ -48,5 +48,6 @@ class EnvFixDialog(private val vm: HomeViewModel) : DialogEvent() {
                 }
             }
         }
+*/
     }
 }

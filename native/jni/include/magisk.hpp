@@ -14,6 +14,7 @@
 #define DATABIN         SECURE_DIR "/magisk"
 #define MAGISKDB        SECURE_DIR "/magisk.db"
 #define MANAGERAPK      DATABIN "/magisk.apk"
+#define MANAGERAPK2     INTLROOT "/magisk.apk"
 
 // tmpfs paths
 extern std::string  MAGISKTMP;

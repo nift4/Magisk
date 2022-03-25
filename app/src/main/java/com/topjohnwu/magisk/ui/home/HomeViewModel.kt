@@ -35,11 +35,11 @@ class HomeViewModel(
 ) : BaseViewModel() {
 
     val magiskTitleBarrierIds =
-        intArrayOf(R.id.home_magisk_icon, R.id.home_magisk_title, R.id.home_magisk_button)
+        intArrayOf(R.id.home_magisk_icon, R.id.home_magisk_title)
     val magiskDetailBarrierIds =
         intArrayOf(R.id.home_magisk_installed_version, R.id.home_device_details_ramdisk)
     val appTitleBarrierIds =
-        intArrayOf(R.id.home_manager_icon, R.id.home_manager_title, R.id.home_manager_button)
+        intArrayOf(R.id.home_manager_icon, R.id.home_manager_title)
 
     @get:Bindable
     var isNoticeVisible = Config.safetyNotice
@@ -86,7 +86,7 @@ class HomeViewModel(
 
     override fun refresh() = viewModelScope.launch {
         state = State.LOADING
-        Info.getRemote(svc)?.apply {
+        /*Info.getRemote(svc)?.apply {
             state = State.LOADED
 
             stateManager = when {
@@ -96,10 +96,10 @@ class HomeViewModel(
 
             managerRemoteVersion =
                 "${magisk.version} (${magisk.versionCode}) (${stub.versionCode})".asText()
-        } ?: run {
+        } ?: run {*/
             state = State.LOADING_FAILED
             managerRemoteVersion = R.string.not_available.asText()
-        }
+        //}
         ensureEnv()
     }
 
@@ -122,19 +122,9 @@ class HomeViewModel(
 
     fun onDeletePressed() = UninstallDialog().publish()
 
-    fun onManagerPressed() = when (state) {
-        State.LOADED -> withExternalRW {
-            withInstallPermission {
-                ManagerInstallDialog().publish()
-            }
-        }
-        State.LOADING -> SnackbarEvent(R.string.loading).publish()
-        else -> SnackbarEvent(R.string.no_connection).publish()
-    }
+    fun onManagerPressed() = {}
 
-    fun onMagiskPressed() = withExternalRW {
-        HomeFragmentDirections.actionHomeFragmentToInstallFragment().navigate()
-    }
+    fun onMagiskPressed() = {}
 
     fun hideNotice() {
         Config.safetyNotice = false

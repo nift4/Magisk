@@ -43,18 +43,18 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/l1"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@string/home_app_title"
                 android:textAppearance="@style/AppearanceFoundation.Title"
                 android:textColor="?colorPrimary"
-                android:maxLines="1"
-                android:ellipsize="end"
                 app:layout_constraintBottom_toBottomOf="@+id/home_manager_icon"
-                app:layout_constraintEnd_toStartOf="@+id/home_manager_button"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/home_manager_icon"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/home_app_title" />
 
-            <FrameLayout
+            <!--<FrameLayout
                 android:id="@+id/home_manager_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,10 +64,9 @@
 
                 <Button
                     style="@style/WidgetFoundation.Button"
-                    gone="@{viewModel.stateManager != MagiskState.OBSOLETE}"
+                    gone="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{() -> viewModel.onManagerPressed()}"
                     android:text="@string/update"
                     android:textAllCaps="false"
                     android:layout_gravity="end"
@@ -75,16 +74,15 @@
 
                 <Button
                     style="@style/WidgetFoundation.Button.Text"
-                    gone="@{viewModel.stateManager != MagiskState.UP_TO_DATE}"
+                    gone="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:onClick="@{() -> viewModel.onManagerPressed()}"
                     android:text="@string/install"
                     android:textAllCaps="false"
                     app:icon="@drawable/ic_install"/>
 
-            </FrameLayout>
+            </FrameLayout>-->
 
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/home_manager_title_barrier"
@@ -92,7 +90,7 @@
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
                 app:referencedIds="@{viewModel.appTitleBarrierIds}"
-                tools:constraint_referenced_ids="home_manager_icon,home_manager_title,home_manager_button" />
+                tools:constraint_referenced_ids="home_manager_icon,home_manager_title" />
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -112,27 +110,10 @@
                         android:layout_height="wrap_content">
 
                         <LinearLayout
-                            android:id="@+id/home_manager_latest_version"
-                            style="@style/W.Home.Item.Top"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                            <TextView
-                                style="@style/W.Home.ItemContent"
-                                android:text="@string/home_latest_version" />
-
-                            <TextView
-                                style="@style/W.Home.ItemContent.Right"
-                                android:text="@{viewModel.managerRemoteVersion}"
-                                tools:text="22.0 (22000) (16)" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
                             android:id="@+id/home_manager_installed_version"
                             style="@style/W.Home.Item"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/home_manager_latest_version">
+                            app:layout_constraintTop_toTopOf="parent">
 
                             <TextView
                                 style="@style/W.Home.ItemContent"

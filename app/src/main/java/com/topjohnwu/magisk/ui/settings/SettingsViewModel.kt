@@ -52,7 +52,7 @@ class SettingsViewModel : BaseViewModel(), BaseSettingsItem.Handler {
         // Manager
         list.addAll(listOf(
             AppSettings,
-            UpdateChannel, UpdateChannelUrl, DoHToggle, UpdateChecker, DownloadPath
+            DoHToggle, DownloadPath
         ))
         if (Info.env.isActive) {
             if (Const.USER_ID == 0) {
@@ -111,7 +111,6 @@ class SettingsViewModel : BaseViewModel(), BaseSettingsItem.Handler {
     override fun onItemAction(view: View, item: BaseSettingsItem) {
         when (item) {
             Language -> RecreateEvent().publish()
-            UpdateChannel -> openUrlIfNecessary(view)
             is Hide -> viewModelScope.launch { HideAPK.hide(view.activity, item.value) }
             Restore -> viewModelScope.launch { HideAPK.restore(view.activity) }
             Zygisk -> if (Zygisk.mismatch) SnackbarEvent(R.string.reboot_apply_change).publish()
@@ -119,12 +118,6 @@ class SettingsViewModel : BaseViewModel(), BaseSettingsItem.Handler {
         }
     }
 
-    private fun openUrlIfNecessary(view: View) {
-        UpdateChannelUrl.refresh()
-        if (UpdateChannelUrl.isEnabled && UpdateChannelUrl.value.isBlank()) {
-            UpdateChannelUrl.onPressed(view, this)
-        }
-    }
 
     private fun authenticate(callback: () -> Unit) {
         BiometricEvent {
