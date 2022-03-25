@@ -364,12 +364,14 @@ static void daemon_entry() {
     unlink(mount_list.data());
 
     // Load config status
+    /*
     auto config = MAGISKTMP + "/" INTLROOT "/config";
     parse_prop_file(config.data(), [](auto key, auto val) -> bool {
         if (key == "RECOVERYMODE" && val == "true")
             RECOVERY_MODE = true;
         return true;
     });
+    */
 
     // Use isolated devpts if kernel support
     if (access("/dev/pts/ptmx", F_OK) == 0) {
