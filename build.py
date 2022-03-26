@@ -171,6 +171,9 @@ def load_config(args):
         if key.startswith('magisk.'):
             config[key[7:]] = value
 
+    if args.out:
+        config['outdir'] = args.out
+
     try:
         config['versionCode'] = int(config['versionCode'])
     except ValueError:
@@ -518,6 +521,8 @@ parser.add_argument('-v', '--verbose', action='store_true',
                     help='verbose output')
 parser.add_argument('-c', '--config', default='config.prop',
                     help='custom config file (default: config.prop)')
+parser.add_argument('-o', '--out', default='out',
+                    help='custom out (default: out)')
 subparsers = parser.add_subparsers(title='actions')
 
 all_parser = subparsers.add_parser(
