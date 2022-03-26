@@ -14,7 +14,6 @@
 #define DATABIN         SECURE_DIR "/magisk"
 #define MAGISKDB        SECURE_DIR "/magisk.db"
 #define MANAGERAPK      DATABIN "/magisk.apk"
-#define MANAGERAPK2     INTLROOT "/magisk.apk"
 
 // tmpfs paths
 extern std::string  MAGISKTMP;
@@ -29,6 +28,7 @@ extern std::string  MAGISKTMP;
 #define ROOTMNT     ROOTOVL "/.mount_list"
 #define ZYGISKBIN   INTLROOT "/zygisk"
 #define SELINUXMOCK INTLROOT "/selinux"
+#define MANAGERAPK2 INTLROOT "/magisk.apk"
 
 constexpr const char *applet_names[] = { "su", "resetprop", nullptr };
 

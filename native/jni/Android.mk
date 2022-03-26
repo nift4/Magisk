@@ -13,7 +13,8 @@ LOCAL_STATIC_LIBRARIES := \
     libnanopb \
     libsystemproperties \
     libphmap \
-    libxhook
+    libxhook \
+    libsepol
 
 LOCAL_SRC_FILES := \
     core/applets.cpp \
@@ -40,7 +41,11 @@ LOCAL_SRC_FILES := \
     zygisk/memory.cpp \
     zygisk/deny/cli.cpp \
     zygisk/deny/utils.cpp \
-    zygisk/deny/revert.cpp
+    zygisk/deny/revert.cpp \
+    magiskpolicy/sepolicy.cpp \
+    magiskpolicy/rules.cpp \
+    magiskpolicy/policydb.cpp \
+    magiskpolicy/statement.cpp
 
 LOCAL_LDLIBS := -llog
 

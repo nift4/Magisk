@@ -12,6 +12,7 @@
 #include <daemon.hpp>
 #include <resetprop.hpp>
 #include <selinux.hpp>
+#include <magiskpolicy.hpp>
 
 #include "core.hpp"
 
@@ -326,6 +327,37 @@ void post_fs_data(int client) {
         disable_modules();
         disable_deny();
     } else {
+
+		/* Load module SEPolicy, usually done by magiskinit */
+	    sepolicy *sepol = sepolicy::from_file(SELINUX_POLICY);
+	    // Use current policy if nothing is loaded
+	    if (sepol) {
+		    // Read all custom rules into memory
+		    string rules;
+		    std::string custom_rules_dir;
+		    custom_rules_dir.assign(MODULEROOT);
+		    if (auto dir = xopen_dir(custom_rules_dir.data())) {
+			    for (dirent *entry; (entry = xreaddir(dir.get()));) {
+				    auto rule_file = custom_rules_dir + "/" + entry->d_name + "/sepolicy.rule";
+				    auto skip_file = custom_rules_dir + "/" + entry->d_name + "/disable";
+				    if (xaccess(skip_file.data(), R_OK) == 0) {
+					    continue;
+				    } else if (xaccess(rule_file.data(), R_OK) == 0) {
+					    LOGD("Load custom sepolicy patch: [%s]\n", rule_file.data());
+					    full_read(rule_file.data(), rules);
+					    rules += '\n';
+				    }
+			    }
+		    }
+		    sepol->load_rules(rules);
+		    if (!sepol->to_file(SELINUX_LOAD)) {
+			    LOGE("* Cannot apply policy\n");
+		    }
+	    } else {
+		    LOGE("* Cannot load policy from " SELINUX_POLICY "\n");
+	    }
+
+
         exec_common_scripts("post-fs-data");
         db_settings dbs;
         get_db_settings(dbs, ZYGISK_CONFIG);
